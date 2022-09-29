@@ -44,8 +44,8 @@ async function buildPlot() {
         .y(d => yScaler(yAccessor(d)));
 
     var tempHighGenerator = d3.line()
-        .x(d => tempHighScaler(tempHighAccessor(d)))
-        .y(d => yScaler(yAccessor(d)));
+        .x(d => xScaler(xAccessor(d)))
+        .y(d => tempHighScaler(tempHighAccessor(d)));
 
     var xAxis = d3.axisBottom()
         .scale(xScaler);
@@ -57,13 +57,14 @@ async function buildPlot() {
         .attr("d",lineGenerator(data))
         .attr("transform", "translate(80, 10)")
         .attr("fill","none")
-        .attr("stroke","black");
+        .attr("stroke","blue");
 
-    /*bounded.append("path")
+    bounded.append("path")
         .attr("d",tempHighGenerator(data))
-        .attr("transform", "translate(50, 10)")
+        .attr("transform", "translate(80, 10)")
+        .attr("opacity", 0.5)
         .attr("fill","none")
-        .attr("stroke","red");*/
+        .attr("stroke","red");
 
     const calibration = dimension.boundedHeight + 10
 
@@ -90,6 +91,24 @@ async function buildPlot() {
         .style('font-family', 'Helvetica')
         .style('font-size', 15)
         .text('Temperature in Fahrenheit');
+
+    bounded.append('text')
+        .attr('x', dimension.width/2 + 10)
+        .attr('y', dimension.height*0.9)
+        .attr('text-anchor', 'middle')
+        .style('font-family', 'Helvetica')
+        .style('font-size', 15)
+        .style('fill', "red")
+        .text('TemperatureHigh');
+
+    bounded.append('text')
+        .attr('x', dimension.width/2 + 10)
+        .attr('y', dimension.height*0.85)
+        .attr('text-anchor', 'middle')
+        .style('font-family', 'Helvetica')
+        .style('font-size', 15)
+        .style('fill', "blue")
+        .text('TemperatureMin');
 }
 
 buildPlot();
