@@ -55,7 +55,7 @@ async function buildPlot() {
 
     bounded.append("path")
         .attr("d",lineGenerator(data))
-        .attr("transform", "translate(50, 10)")
+        .attr("transform", "translate(80, 10)")
         .attr("fill","none")
         .attr("stroke","black");
 
@@ -68,20 +68,28 @@ async function buildPlot() {
     const calibration = dimension.boundedHeight + 10
 
     bounded.append("g")
-        .attr("transform", "translate(50, " + calibration +")")
+        .attr("transform", "translate(80, " + calibration +")")
         .call(xAxis);
 
     bounded.append("g")
-        .attr("transform", "translate(50, 10)")
+        .attr("transform", "translate(80, 10)")
         .call(yAxis);
 
-    svg.append('text')
+    bounded.append('text')
         .attr('x', dimension.width/2 + 10)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
         .style('font-size', 20)
         .text('Temperature');
+
+    bounded.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('x', 0)
+        .attr('transform', 'translate(50,' + dimension.height/1.8 + ')rotate(-90)')
+        .style('font-family', 'Helvetica')
+        .style('font-size', 15)
+        .text('Temperature in Fahrenheit');
 }
 
 buildPlot();
