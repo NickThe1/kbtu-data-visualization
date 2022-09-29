@@ -4,6 +4,7 @@ async function buildPlot() {
     //console.table(data);
     const dateParser = d3.timeParse("%Y-%m-%d");
     const yAccessor = (d) => d.temperatureMin;
+    const tempHighAccessor = (d) => d.temperatureHigh;
     const xAccessor = (d) => dateParser(d.date);
     // Функции для инкапсуляции доступа к колонкам набора данных
 
@@ -40,11 +41,35 @@ async function buildPlot() {
         .x(d => xScaler(xAccessor(d)))
         .y(d => yScaler(yAccessor(d)));
 
+    var xAxis = d3.axisBottom()
+        .scale(xScaler);
+
+    var yAxis = d3.axisLeft()
+        .scale(yScaler);
+
     bounded.append("path")
         .attr("d",lineGenerator(data))
-        // .attr("fill","none")
-        .attr("stroke","lightgrey")
+        .attr("transform", "translate(50, 10)")
+        .attr("fill","none")
+        .attr("stroke","black");
 
+    const calibration = dimension.boundedHeight + 10
+
+    bounded.append("g")
+        .attr("transform", "translate(50, " + calibration +")")
+        .call(xAxis);
+
+    bounded.append("g")
+        .attr("transform", "translate(50, 10)")
+        .call(yAxis);
+
+    svg.append('text')
+        .attr('x', 150)
+        .attr('y', 40)
+        .attr('text-anchor', 'middle')
+        .style('font-family', 'Helvetica')
+        .style('font-size', 20)
+        .text('Temperature');
 }
 
 buildPlot();
