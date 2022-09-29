@@ -1,7 +1,5 @@
 async function buildPlot() {
-    console.log("Hello world");
     const data = await d3.json("my_weather_data.json");
-    //console.table(data);
     const dateParser = d3.timeParse("%Y-%m-%d");
     const yAccessor = (d) => d.temperatureMin;
     const tempHighAccessor = (d) => d.temperatureHigh;
@@ -31,7 +29,11 @@ async function buildPlot() {
 
     const yScaler = d3.scaleLinear()
         .domain(d3.extent(data,yAccessor))
-        .range([dimension.boundedHeight,0]);
+        .range([dimension.boundedHeight,50]);
+
+    const tempHighScaler = d3.scaleLinear()
+        .domain(d3.extent(data,tempHighAccessor))
+        .range([dimension.boundedHeight,50]);
 
     const xScaler = d3.scaleTime()
         .domain(d3.extent(data,xAccessor))
@@ -39,6 +41,10 @@ async function buildPlot() {
 
     var lineGenerator = d3.line()
         .x(d => xScaler(xAccessor(d)))
+        .y(d => yScaler(yAccessor(d)));
+
+    var tempHighGenerator = d3.line()
+        .x(d => tempHighScaler(tempHighAccessor(d)))
         .y(d => yScaler(yAccessor(d)));
 
     var xAxis = d3.axisBottom()
@@ -53,6 +59,12 @@ async function buildPlot() {
         .attr("fill","none")
         .attr("stroke","black");
 
+    /*bounded.append("path")
+        .attr("d",tempHighGenerator(data))
+        .attr("transform", "translate(50, 10)")
+        .attr("fill","none")
+        .attr("stroke","red");*/
+
     const calibration = dimension.boundedHeight + 10
 
     bounded.append("g")
@@ -64,7 +76,7 @@ async function buildPlot() {
         .call(yAxis);
 
     svg.append('text')
-        .attr('x', 150)
+        .attr('x', dimension.width/2 + 10)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
