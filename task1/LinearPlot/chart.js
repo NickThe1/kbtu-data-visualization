@@ -53,6 +53,8 @@ async function buildPlot() {
     var yAxis = d3.axisLeft()
         .scale(yScaler);
 
+    yAxis.tickFormat( (d,i) => d + "F")
+
     bounded.append("path")
         .attr("d",lineGenerator(data))
         .attr("transform", "translate(80, 10)")
