@@ -41,7 +41,7 @@ async function buildPlot() {
 
     var lineGenerator = d3.line()
         .x(d => xScaler(xAccessor(d)))
-        .y(d => yScaler(yAccessor(d)));
+        .y(d => tempHighScaler(yAccessor(d)));
 
     var tempHighGenerator = d3.line()
         .x(d => xScaler(xAccessor(d)))
@@ -51,19 +51,19 @@ async function buildPlot() {
         .scale(xScaler);
 
     var yAxis = d3.axisLeft()
-        .scale(yScaler);
+        .scale(tempHighScaler);
 
     yAxis.tickFormat( (d,i) => d + "F")
 
     bounded.append("path")
         .attr("d",lineGenerator(data))
-        .attr("transform", "translate(80, 10)")
+        .attr("transform", "translate(80, -30)")
         .attr("fill","none")
         .attr("stroke","blue");
 
     bounded.append("path")
         .attr("d",tempHighGenerator(data))
-        .attr("transform", "translate(80, 10)")
+        .attr("transform", "translate(80, -30)")
         .attr("opacity", 0.5)
         .attr("fill","none")
         .attr("stroke","red");
@@ -79,7 +79,7 @@ async function buildPlot() {
         .call(yAxis);
 
     bounded.append('text')
-        .attr('x', dimension.width/2 + 10)
+        .attr('x', dimension.width/3)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
