@@ -12,14 +12,14 @@
 <body style="padding: 50px">
 <script src="graph.js"></script>
     <div class="row">
-     <div class="col-sm-5" id="wrapper" style="padding-top: 30px">
+     <div class="col-sm-8" id="wrapper" style="padding-top: 30px">
 
      </div>
         <div class="btn-group-vertical col-sm-4 float-left">
-            <button onclick="drawBar('temperatureLow')" type="button" class="btn btn-primary">Temp Low</button>
-            <button onclick="drawBar('temperatureHigh')" type="button" class="btn btn-primary">Temp High</button>
-            <button onclick="drawBar('temperatureMin')" type="button" class="btn btn-primary">Temp Min</button>
-            <button onclick="drawBar('temperatureMax')" type="button" class="btn btn-primary">Temp Max</button>
+            <button id="1" onclick="drawBar(this.id, 'temperatureLow')" type="button" class="btn btn-primary active">Temp Low</button>
+            <button id="2" onclick="drawBar(this.id, 'temperatureHigh')" type="button" class="btn btn-primary">Temp High</button>
+            <button id="3" onclick="drawBar(this.id, 'temperatureMin')" type="button" class="btn btn-primary">Temp Min</button>
+            <button id="4" onclick="drawBar(this.id, 'temperatureMax')" type="button" class="btn btn-primary">Temp Max</button>
         </div>
     </div>
 </body>
