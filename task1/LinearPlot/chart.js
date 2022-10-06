@@ -8,7 +8,7 @@ async function buildPlot() {
 
     var dimension = {
         width: window.innerWidth*0.9,
-        height: 400,
+        height: 600,
         margin: {
             top: 15,
             left: 15,
@@ -31,6 +31,7 @@ async function buildPlot() {
         .domain(d3.extent(data,yAccessor))
         .range([dimension.boundedHeight,50]);
 
+    //added scaler
     const tempHighScaler = d3.scaleLinear()
         .domain(d3.extent(data,tempHighAccessor))
         .range([dimension.boundedHeight,50]);
