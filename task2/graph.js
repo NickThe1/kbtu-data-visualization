@@ -71,15 +71,15 @@ async function drawBar(btnId, data) {
 
     const mean = d3.mean(dataset,xAccessor);
     const meanLine = bounds.append("line")
-        .attr("x1", xScaler(mean))
-        .attr("x2", xScaler(mean))
+        .attr("x1", xScaler(mean) + shift)
+        .attr("x2", xScaler(mean) + shift)
         .attr("y1", -15)
         .attr("y2", dimensions.boundedHeight)
         .attr("stroke","black")
         .attr("stroke-dasharray","2px 4px");
 
     const meanLabel = bounds.append("text")
-        .attr("x",xScaler(mean))
+        .attr("x",xScaler(mean) + shift)
         .attr("y",10)
         .text("Mean")
         .attr("fill","maroon")
