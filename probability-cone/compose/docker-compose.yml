@@ -1,24 +1,22 @@
-version: "3.7"
-
+version: '3.8'
 services:
-
   dat-db:
     image: postgres:11.6
     ports:
       - "5435:5432"
     networks:
-      - stock-net
+      - dat-net
     environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_USER=root
-      - POSTGRES_DB=stock
+      - POSTGRES_PASSWORD=PVYG2U2pZeBA3Aqp
+      - POSTGRES_USER=curator
+      - POSTGRES_DB=curatordb
     volumes:
       - ./dump/:/docker-entrypoint-initdb.d/
-      - stock-db:/var/lib/postgresql/data
+      - v-dat-db:/var/lib/postgresql/data
     restart: unless-stopped
 
 networks:
-  stock-net:
+  dat-net:
 
 volumes:
-  stock-db:
+  v-dat-db:
