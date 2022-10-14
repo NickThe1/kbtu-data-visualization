@@ -87,7 +87,7 @@ async function drawBar(btnId, data, clear) {
     const blue = bounds.append("text")
         .attr("x",100)
         .attr("y",40)
-        .text("Blue dots")
+        .text("Blue rect")
         .attr("fill","blue")
         .attr("font-size","15px")
         .attr("text-anchor","middle");
@@ -116,10 +116,12 @@ async function drawBar(btnId, data, clear) {
         .selectAll("dot")
         .data(dots1)
         .enter()
-        .append("circle")
-        .attr("cx", function (d) { return xScaler(d[0]); } )
-        .attr("cy", function (d) { return yScaler(d[1]) + shift; } )
-        .attr("r", 4)
+        .append("rect")
+        .attr("x", function (d) { return xScaler(d[0]); } )
+        .attr("y", function (d) { return yScaler(d[1]) + shift; } )
+        //.attr("r", 4)
+        .attr("width", 8)
+        .attr("height", 8)
         .attr("transform", "translate(" + 100 + "," + -shift + ")")
         .style("fill", "blue");
 
