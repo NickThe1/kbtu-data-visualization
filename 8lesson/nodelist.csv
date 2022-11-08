@@ -1,17 +1,26 @@
-id,role,salary
-Irene,manager,300000
-Zan,manager,380000
-Jim,employee,150000
-Susie,employee,90000
-Kai,employee,135000
-Shirley,employee,60000
-Erik,employee,90000
-Shelby,employee,150000
-Tony,employee,72000
-Fil,employee,35000
-Adam,employee,85000
-Ian,employee,83000
-Miles,employee,99000
-Sarah,employee,160000
-Nadieh,contractor,240000
-Hajra,contractor,280000
+company,country
+SpaceX,USA
+Jet Propulsion Laboratory,USA
+Armstrong Flight Research Center,USA
+Federal Aviation Administration,USA
+NASA,USA
+Naked Science,USA
+Starlink,USA
+Safran,USA
+Kennedy Space Center,USA
+SpaceNews,USA
+Blue Origin,USA
+United Launch Alliance, USA
+Marshall Space Flight Center,USA
+Virgin Galactic,USA
+Rocket Lab,USA
+Leonardo,Italy
+Italian Space Agency,Italy
+ESA,France
+Guiana Space Center,France
+Space Research Center,India
+Roscosmos,Russia
+UK space agency,UK
+Meggitt PLC,UK
+ClearSpace, Switzerland
+Japan Aerospace Exploration Agency, Japan
