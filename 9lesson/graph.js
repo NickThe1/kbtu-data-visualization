@@ -72,7 +72,11 @@ async function createForceLayout() {
         .attr("x", d.x = d3.event.x)
         .attr("y", d.y = d3.event.y);
     }
-
+var dragHandler = d3.drag()
+    .on("drag", function () {
+        d3.selectAll("g.nodes")
+            .attr("transform",`translate(${d3.event.x},${d3.event.y})`)
+    });
     function dragended(d) {
       d3.select(this).classed("active", false);
     }
@@ -105,6 +109,105 @@ async function createForceLayout() {
             .attr("y2", d => d.target.y)
         d3.selectAll("g.node")
             .attr("transform", d => `translate(${d.x},${d.y})`)
+    }
+
+     d3.selectAll("input").on("change", function(d) {
+      selectDataset.call(this, d);
+    });
+
+    function changeText(d, text) {
+        d3.selectAll("g.node")
+            .style("fill", d => roleScale(d.role))
+    nodeEnter.append("text")
+        .style("text-anchor", "middle")
+        .attr("y", 15)
+        .text(d => d.id)
+      let value = this.value;
+      change(datasetTotal, value, text);
+    }
+
+
+    update(g.links, g.nodes);
+
+    svg.selectAll('circle').on('dblclick', function () {
+        var pivot_id = ($(this).siblings('title').text())
+        console.log('pivoting on', pivot_id)
+        pivot_search(pivot_id)
+    });
+
+    function update(links, nodes) {
+        link = svg.selectAll(".link")
+            .data(links)
+            .enter()
+            .append("line")
+            .attr("class", "link")
+            .attr('marker-end', 'url(#arrowhead)')
+
+
+        edgepaths = svg.selectAll(".edgepath")
+            .data(links)
+            .enter()
+            .append('path')
+            .attrs({
+                'class': 'edgepath',
+                'fill-opacity': 0,
+                'stroke-opacity': 0,
+                'id': function (d, i) {
+                    return 'edgepath' + i
+                }
+            })
+            .style("pointer-events", "none");
+
+        edgelabels = svg.selectAll(".edgelabel")
+            .data(links)
+            .enter()
+            .append('text')
+            .style("pointer-events", "none")
+            .attrs({
+                'class': 'edgelabel',
+                'id': function (d, i) {
+                    return 'edgelabel' + i
+                },
+                'font-size': 10,
+                'fill': '#aaa'
+            });
+
+        node = svg.selectAll(".node")
+            .data(nodes)
+            .enter()
+            .append("g")
+            .attr("class", "node")
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+            );
+
+        node.append("circle")
+            .attr("r", 5)
+            .attr("fill", function (d) {
+                return color(d.group);
+            })
+
+
+        node.append("title")
+            .text(function (d) {
+                return d.id;
+            });
+
+        node.append("text")
+            .attr("dy", -3)
+            .text(function (d) {
+                return d.label;
+            });
+
+
+        simulation
+            .nodes(nodes)
+            .on("tick", ticked);
+
+        simulation.force("link")
+            .links(links);
+
     }
 
     var svg = d3.selectAll("node");
