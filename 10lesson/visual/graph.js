@@ -1,14 +1,14 @@
-async function drawBar(btnId, data) {
+async function drawBar(path, element, name) {
 
-    const dataset = await d3.json("./umap1.json")
+    const dataset = await d3.json(path)
     //Accessor
     const xAccessor = d => d.Comp1;
-    const yAccessor = d => d["Comp2"];
+    const yAccessor = d => d.Comp2;
     console.log(yAccessor((dataset)))
     // to shift x & y axes and data to right
     const shift = 50;
 
-    const width = 800
+    const width = 550
     let dimensions = {
         width: width,
         height: width * 0.6,
@@ -28,7 +28,7 @@ async function drawBar(btnId, data) {
 
     // 3. Draw canvas
 
-    const wrapper = d3.select("#wrapper")
+    const wrapper = d3.select(element)
         .html("") // clear div before drawing
         .append("svg")
         .attr("width", dimensions.width)
@@ -39,13 +39,13 @@ async function drawBar(btnId, data) {
 
     const xScaler = d3.scaleLinear()
         .domain(d3.extent(dataset,xAccessor))
-        .range([0,dimensions.boundedWidth])
+        .range([0,dimensions.boundedWidth + 10])
         .nice()
 
 
     const yScaler = d3.scaleLinear()
         .domain(d3.extent(dataset,yAccessor))
-        .range([dimensions.boundedHeight,0])
+        .range([dimensions.boundedHeight,10])
 
     const xAxisGen = d3.axisBottom()
         .scale(xScaler);
@@ -64,17 +64,50 @@ async function drawBar(btnId, data) {
     const xLabel = bounds.append("text")
         .attr("x",dimensions.boundedWidth - 30)
         .attr("y",dimensions.boundedHeight + 30)
-        .text("Temperature")
+        .text("Component2")
         .attr("fill","black")
         .attr("font-size","12px")
         .attr("text-anchor","middle");
 
     const yLabel = bounds.append("text")
-        .attr("x",20)
+        .attr("x",10)
         .attr("y",30)
-        .text("Count")
+        .attr('transform', 'translate(-5, 90)rotate(-90)')
+        .text("Component 1")
         .attr("fill","black")
         .attr("font-size","12px")
+        .attr("text-anchor","middle");
+
+    const labels = bounds.append("text")
+        .attr("x",250)
+        .attr("y",100)
+        .text("class 0")
+        .attr("fill","red")
+        .attr("font-size","12px")
+        .attr("text-anchor","middle");
+
+    const labels1 = bounds.append("text")
+        .attr("x",250)
+        .attr("y",110)
+        .text("class 1")
+        .attr("fill","green")
+        .attr("font-size","12px")
+        .attr("text-anchor","middle");
+
+    const labels2 = bounds.append("text")
+        .attr("x",250)
+        .attr("y",120)
+        .text("class 0")
+        .attr("fill","blue")
+        .attr("font-size","12px")
+        .attr("text-anchor","middle");
+
+    const chart = bounds.append("text")
+        .attr("x",270)
+        .attr("y",20)
+        .text(name)
+        .attr("fill","black")
+        .attr("font-size","15px")
         .attr("text-anchor","middle");
 
     const scatter = bounds.append('g')
@@ -82,12 +115,19 @@ async function drawBar(btnId, data) {
         .data(dataset)
         .enter()
         .append("circle")
-        .attr("cx", function (d) { return xScaler(d["Comp1"]); } )
-        .attr("cy", function (d) { return yScaler(d["Comp2"]) + shift; } )
+        .attr("cx", function (d) { return xScaler(d["Comp1"]) - shift; } )
+        .attr("cy", function (d) { return yScaler(d["Comp2"]) + shift - 4; } ) // - 4 is diameter
         .attr("r", 4)
         .attr("transform", "translate(" + 100 + "," + -shift + ")")
         .style("fill", function (d) { return d["Label"] == 0 ? "red" : d["Label"] == 1 ? "blue" : "green"; });
 }
 
+tsne = "./tsne.json"
+tsne1 = "./tsne1.json"
+umap = "./umap.json"
+umap1 = "./umap1.json"
 
-drawBar(null, "temperatureLow");
+drawBar(tsne, "#wrapper", "tsne default");
+drawBar(tsne1, "#wrapper1", "tsne default");
+drawBar(umap, "#wrapper2", "tsne default");
+drawBar(umap1, "#wrapper3", "tsne default");
