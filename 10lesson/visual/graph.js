@@ -128,6 +128,6 @@ umap = "./umap.json"
 umap1 = "./umap1.json"
 
 drawBar(tsne, "#wrapper", "tsne default");
-drawBar(tsne1, "#wrapper1", "tsne default");
-drawBar(umap, "#wrapper2", "tsne default");
-drawBar(umap1, "#wrapper3", "tsne default");
+drawBar(tsne1, "#wrapper1", "tsne perplexity=23, metric=euclidean");
+drawBar(umap, "#wrapper2", "umap default");
+drawBar(umap1, "#wrapper3", "umap n_components = 2, n_neighbors = 100");
