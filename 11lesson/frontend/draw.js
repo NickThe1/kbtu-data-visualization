@@ -1,13 +1,13 @@
 function getRandomData(ordinal = false) {
 
-    const NGROUPS = 6,
+    const NGROUPS = 5,
         MAXLINES = 15,
-        MAXSEGMENTS = 20,
-        MAXCATEGORIES = 20,
-        MINTIME = new Date(2013,2,21);
+        MAXSEGMENTS = 60,
+        MAXCATEGORIES = 15,
+        MINTIME = new Date(2007,2,21);
 
     const nCategories = Math.ceil(Math.random()*MAXCATEGORIES),
-        categoryLabels = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        categoryLabels = ['solar,dust,ray', 'acceleration,pioneer,gravitational', 'space,system,control', 'coronal,cmes,cme', 'dust,pioneer,ray'];
 
     return [...Array(NGROUPS).keys()].map(i => ({
         group: 'group' + (i+1),
