@@ -26,6 +26,7 @@ async function createForceLayout() {
         .on("tick", forceTick)
 
     simulation.force("link").links(edges)
+    var svg = d3.selectAll("node");
 
     var dimension = {
         width: window.innerWidth * 0.8,
@@ -110,6 +111,8 @@ var dragHandler = d3.drag()
         d3.selectAll("g.node")
             .attr("transform", d => `translate(${d.x},${d.y})`)
     }
+
+    dragHandler(wrapper.selectAll("g.node"))
 
      d3.selectAll("input").on("change", function(d) {
       selectDataset.call(this, d);
@@ -210,7 +213,6 @@ var dragHandler = d3.drag()
 
     }
 
-    var svg = d3.selectAll("node");
     svg.append("use")
         .attr("href", "#pointer")
         .attr("x", 50)
