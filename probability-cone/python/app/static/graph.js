@@ -10,6 +10,11 @@ async function clear(){
         .attr("height", height)
         .append("g")
         .attr("transform", "translate("+ spacing/2 + "," + spacing/2 + ")")
+    svg.append("rect")
+        .attr("width", "78.5%")
+        .attr("height", "80%")
+        .attr("transform", "translate(30,0)")
+        .attr("fill", "#DFDDDD")
 
     var xScaler = d3.scaleLinear()
         .domain([0, 100])
@@ -46,6 +51,11 @@ async function clear(){
         .attr("height", height)
         .append("g")
         .attr("transform", "translate("+ spacing/2 + "," + spacing/2 + ")")
+    svg2.append("rect")
+        .attr("width", "78.5%")
+        .attr("height", "80%")
+        .attr("transform", "translate(30,0)")
+        .attr("fill", "#DFDDDD")
 
     var xScaler = d3.scaleLinear()
         .domain([0, 100])
