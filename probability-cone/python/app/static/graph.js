@@ -1,6 +1,11 @@
-async function buildPlot(id, name, it) {
-    const data = await d3.json("/data/" + name + "/" + it);
-    console.log(data)
+async function buildPlot(id, name, it, real) {
+    var data = await d3.json("/data/" + name + "/" + it);
+
+    if(data == null){
+        data = await d3.json("/data/googl/1")
+        real="googl"
+    }
+
     const yAccessor = (d) => d.low;
     const tempHighAccessor = (d) => d.up;
     const xAccessor = (d) => d.ind;
@@ -32,10 +37,9 @@ async function buildPlot(id, name, it) {
     const yScaler = d3.scaleLinear()
         .domain([-5000,5000])
         .range([dimension.boundedHeight,50]);
-
     //added scaler
     const tempHighScaler = d3.scaleLinear()
-        .domain([-2000,500])
+        .domain(d3.extent(data,yAccessor))
         .range([dimension.boundedHeight,50]);
 
     const xScaler = d3.scaleTime()
@@ -87,14 +91,14 @@ async function buildPlot(id, name, it) {
         .style('font-size', 20)
         .text('Generated cone');
 
-/*    bounded.append('text')
+    bounded.append('text')
         .attr('x', dimension.width/2 + 10)
         .attr('y', dimension.height*0.9)
         .attr('text-anchor', 'middle')
         .style('font-family', 'Helvetica')
         .style('font-size', 15)
         .style('fill', "red")
-        .text('TemperatureHigh');*/
+        .text(real);
 
 /*    bounded.append('text')
         .attr('x', dimension.width/2 + 10)
@@ -106,5 +110,34 @@ async function buildPlot(id, name, it) {
         .text('TemperatureMin');*/
 }
 
-buildPlot("wrapper", "googl", "1");
-buildPlot("wrapper1", "aapl", "1");
+const nam = "googl"
+
+function button_handler(){
+    const x = document.getElementById("usr").value;
+    buildPlot("wrapper", x, "1", x);
+    buildPlot("wrapper1", x, "10", "future " + x);
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function demo() {
+    for (let i = 0; i < 5; i++) {
+        await sleep(10000);
+    }
+}
+
+function generate(){
+    const x = document.getElementById("usr").value;
+    for (let i = 0; i <= 14; i++) {
+        let xx = i;
+        let name = x + i.toString()
+        buildPlot("wrapper", x, ((xx + 1)*10).toString(), name);
+        buildPlot("wrapper1", x, ((xx + 10)*10).toString(), "future " + name);
+        demo()
+    }
+}
+
+buildPlot("wrapper", "googl", "1", nam);
+buildPlot("wrapper1", "googl", "20", "future " + nam);
