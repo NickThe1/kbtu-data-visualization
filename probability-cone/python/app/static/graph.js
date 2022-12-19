@@ -3,7 +3,7 @@ async function buildPlot(id, name, it, real) {
 
     if(data == null){
         data = await d3.json("/data/googl/1")
-        real="googl"
+        real="Incorrect, googl shown"
     }
 
     const yAccessor = (d) => d.low;
