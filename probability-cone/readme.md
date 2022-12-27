@@ -1,5 +1,7 @@
 # Probability cone
 
+![img_7.png](img_7.png)
+
 `Research in probability-cone/python/research/market/market_analysis.ipynb`
 
 ### Constructing probability cone via 

@@ -1,15 +1,10 @@
 from flask import Flask, render_template, jsonify
-import yfinance as yf
 import numpy as np
 import pandas as pd
-import logging
 from sqlalchemy import create_engine
 from statsmodels.regression.linear_model import OLSResults
 
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-
 import statsmodels.api as sm
 
 app = Flask(__name__)
